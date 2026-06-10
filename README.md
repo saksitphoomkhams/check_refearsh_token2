@@ -5,11 +5,18 @@
 ## ใช้งาน
 
 ```bash
-npm install        # ครั้งแรก (ติดตั้ง playwright)
-npm start          # รันโปรแกรม
+npm install                          # ติดตั้ง deps
+npx playwright install chromium      # ติดตั้ง browser (ครั้งแรก)
+copy .env.example .env               # Windows (Mac/Linux: cp) แล้วใส่ EFIN_EMAIL / EFIN_PASSWORD
+npm start                            # รัน (โหลด .env อัตโนมัติ)
 ```
 
 จะมีเมนูให้เลือกโหมด 1-4 ใน terminal
+
+## แชร์งาน / collaborate
+
+- **แก้ไขสดๆ ร่วมกัน**: ใช้ VS Code **Live Share** (`ms-vsliveshare.vsliveshare`) — host กด Live Share → ส่ง invite link → เพื่อน join เห็น cursor/แก้ไข real-time + shared terminal
+- **เก็บประวัติ / สำรอง**: push ขึ้น GitHub (private repo แนะนำ เพราะยิง internal API). `.env` ถูก gitignore — เพื่อนต้องสร้าง `.env` เองจาก `.env.example`
 
 ## Flow การทำงาน
 
