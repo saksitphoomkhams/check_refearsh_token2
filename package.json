@@ -1,0 +1,12 @@
+{
+  "name": "efin-refresh-token-tester",
+  "version": "1.0.0",
+  "description": "ระบบทดสอบ refresh token ของ efin.finance ผ่าน Playwright + ยิง API ตรวจ token valid/expired",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/main.js"
+  },
+  "dependencies": {
+    "playwright": "^1.60.0"
+  }
+}

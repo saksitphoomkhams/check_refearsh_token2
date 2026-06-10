@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# credentials — ห้าม commit
+.env
+
+# output / artifacts
+reports/
+error-screenshot.png
+
+# logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
