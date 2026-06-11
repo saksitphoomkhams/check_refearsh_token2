@@ -45,8 +45,9 @@ const EXPIRY_BUFFER_SECONDS = 5;
 // --- นิยามแต่ละโหมด ---
 // page = หน้าที่เปิดเพื่อเก็บ SSIDI, type = ใช้เลือก path ของ API, columns = ยิงทุก column พร้อมกัน
 //
-// >>> ตอนนี้มีโหมด 1-4 แล้ว (โหมดถัดไปคือ 5) <<<
-//   1 = หน้าอ่านข่าว stock | 2 = หน้าอ่านข่าว crypto | 3 = หน้าหลักคริปโต | 4 = หน้าหลักหุ้น
+// >>> ตอนนี้มีโหมด 1-5 แล้ว (โหมดถัดไปคือ 6) <<<
+//   1 = หน้าอ่านข่าว stock | 2 = หน้าอ่านข่าว crypto | 3 = หน้าหลักคริปโต
+//   4 = หน้าหลักหุ้น | 5 = หน้า home
 //
 // --- วิธีเพิ่มโหมดใหม่ (ง่ายๆ 3 ขั้น) ---
 //   1) ก็อป block โหมดเดิมมา 1 อัน เปลี่ยนเลขนำหน้าเป็นเลขถัดไป (เช่น 5:)
@@ -92,6 +93,12 @@ const MODES = {
       'hotstock', 'hottopic', 'the-insight', 'company-news-mai', 'company-news-set',
       'foreign', 'research', 'economics-market-insights', 'efin-review',
     ],
+  },
+  5: {
+    name: 'หน้า home',
+    type: 'stock',
+    page: 'https://dc3hw.efin.finance/th',
+    columns: ['latest', 'popular'],
   },
 };
 
