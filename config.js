@@ -132,9 +132,9 @@ const MODES = {
   },
   // โหมด 7 ก็ใช้ endpoints เต็ม — เส้น otherasset/highlight + highlight เดิมอยู่ sit-api
   7: {
-    name: 'หน้าหุ้น dr รายตัว (asset/news)',
+    name: 'หน้าหลักหุ้น dr',
     type: 'stock',
-    page: 'https://dc3hw.efin.finance/th/asset/news/dr?page=1&sort_by=latest',
+    page: 'https://dc3hw.efin.finance/th/asset',
     endpoints: [
       {
         label: 'stock/latest/dr',

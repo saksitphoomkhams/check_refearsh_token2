@@ -54,7 +54,7 @@ npm start                            # รัน (โหลด .env อัตโ
 | 4 | หน้าหลักหุ้น | stock | 29 columns |
 | 5 | หน้า home | stock | latest, popular |
 | 6 | หน้าหุ้น dr รายตัว | stock | 4 endpoints (dashboard/dr/stock) |
-| 7 | หน้าหุ้น dr รายตัว (asset/news) | stock | 3 endpoints (stock/dr + highlight) |
+| 7 | หน้าหลักหุ้น dr | stock | 3 endpoints (stock/dr + highlight) |
 
 > โหมดปกติใช้ `columns` (URL pattern เดียว). โหมดที่ยิงหลาย API คนละ path ให้ใช้ `endpoints: [{label, url}]` (ดูโหมด 6)
 

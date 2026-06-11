@@ -62,7 +62,7 @@ npm start
 | 4 | หน้าหลักหุ้น | stock | 29 columns |
 | 5 | หน้า home | stock | latest, popular |
 | 6 | หน้าหุ้น dr รายตัว | stock | 4 endpoints เต็ม |
-| 7 | หน้าหุ้น dr รายตัว (asset/news) | stock | 3 endpoints เต็ม |
+| 7 | หน้าหลักหุ้น dr | stock | 3 endpoints เต็ม |
 
 > หมายเหตุ: endpoint host `sit-api-efincontent` ใช้ token จาก dc3hw ไม่ได้ (401 คนละ env) — สลับเป็น `dc3-api-efincontent` แทน (โหมด 6, 7)
 
