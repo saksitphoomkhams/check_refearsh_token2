@@ -64,6 +64,7 @@ npm start
 | 6 | หน้าหุ้น dr รายตัว | stock | 4 endpoints เต็ม |
 | 7 | หน้าหลักหุ้น dr | stock | 3 endpoints เต็ม |
 | 8 | หน้า search result | stock | 1 endpoint POST + JSON body |
+| 9 | หน้า search modal | stock | 4 endpoints (มี dc3-api-efinmarketinfo) |
 
 > endpoint รองรับ POST ผ่าน field `method: 'POST'` + `body: {...}` (ดูโหมด 8) — `fireUrl` ใส่ Content-Type + stringify ให้
 
