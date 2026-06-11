@@ -45,13 +45,14 @@ const EXPIRY_BUFFER_SECONDS = 5;
 // --- นิยามแต่ละโหมด ---
 // page = หน้าที่เปิดเพื่อเก็บ SSIDI, type = ใช้เลือก path ของ API, columns = ยิงทุก column พร้อมกัน
 //
-// >>> ตอนนี้มีโหมด 1-7 แล้ว (โหมดถัดไปคือ 8) <<<
+// >>> ตอนนี้มีโหมด 1-8 แล้ว (โหมดถัดไปคือ 9) <<<
 //   1 = หน้าอ่านข่าว stock | 2 = หน้าอ่านข่าว crypto | 3 = หน้าหลักคริปโต
 //   4 = หน้าหลักหุ้น | 5 = หน้า home
-//   6, 7 = หน้าหุ้น dr รายตัว (ใช้ endpoints เต็ม)
+//   6 = หน้าหุ้น dr รายตัว | 7 = หน้าหลักหุ้น dr | 8 = หน้า search result (POST)
 //
 // หมายเหตุ: โหมดปกติใช้ `columns` (URL pattern), แต่โหมดที่ต้องยิงหลาย API คนละ path
-// ให้ใช้ `endpoints: [{label, url}]` แทน (ดูโหมด 6 เป็นตัวอย่าง)
+// ให้ใช้ `endpoints: [{label, url, method?, body?}]` แทน (ดูโหมด 6-8 เป็นตัวอย่าง)
+// endpoint รองรับ POST + JSON body ผ่าน field `method` และ `body` (ดูโหมด 8)
 //
 // --- วิธีเพิ่มโหมดใหม่ (ง่ายๆ 3 ขั้น) ---
 //   1) ก็อป block โหมดเดิมมา 1 อัน เปลี่ยนเลขนำหน้าเป็นเลขถัดไป (เช่น 5:)
@@ -148,6 +149,30 @@ const MODES = {
       {
         label: 'highlight',
         url: 'https://dc3-api-efincontent.efin.finance/api/v1/highlight?lang=th',
+      },
+    ],
+  },
+  // โหมด 8 — endpoint เดียวแต่เป็น POST + JSON body (ใช้ method/body ใน endpoint)
+  8: {
+    name: 'หน้า search result',
+    type: 'stock',
+    page: 'https://dc3hw.efin.finance/th/search/latest?keyword=tun',
+    endpoints: [
+      {
+        label: 'search (POST)',
+        url: 'https://dc3-api-efincontent.efin.finance/api/v1/search',
+        method: 'POST',
+        body: {
+          keyword: 'test',
+          pageNumber: 1,
+          sortBy: 'all',
+          contentType: 'all',
+          startDate: '',
+          endDate: '',
+          period: '3Y',
+          lang: 'th',
+          filter: [0],
+        },
       },
     ],
   },

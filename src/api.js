@@ -42,9 +42,10 @@ function classify(httpStatus, statusMessage, hasData) {
  * @param {string} label - ชื่อแสดงผลในตาราง (เช่น column หรือชื่อ endpoint)
  * @param {string} url   - URL เต็มที่จะยิง
  * @param {string} token - ค่า SSIDI ที่ใส่เป็น Bearer
+ * @param {object} [opts] - ตัวเลือกเพิ่ม: { method: 'GET'|'POST', body: object } (สำหรับ POST + JSON body)
  * @returns {Promise<object>} ผลลัพธ์ที่ classify แล้ว
  */
-async function fireUrl(label, url, token) {
+async function fireUrl(label, url, token, opts = {}) {
   const result = {
     column: label,
     url,
@@ -58,13 +59,14 @@ async function fireUrl(label, url, token) {
   };
 
   try {
-    const res = await fetch(url, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-      },
-    });
+    // ประกอบ fetch options — รองrับ GET (ปกติ) และ POST + JSON body
+    const headers = { Authorization: `Bearer ${token}`, Accept: 'application/json' };
+    const fetchOpts = { method: opts.method || 'GET', headers };
+    if (opts.body !== undefined) {
+      headers['Content-Type'] = 'application/json';
+      fetchOpts.body = typeof opts.body === 'string' ? opts.body : JSON.stringify(opts.body);
+    }
+    const res = await fetch(url, fetchOpts);
     result.httpStatus = res.status;
 
     const text = await res.text();
@@ -120,7 +122,7 @@ function fireApi(type, column, token) {
  */
 async function fireMode(mode, token) {
   const tasks = mode.endpoints
-    ? mode.endpoints.map((ep) => fireUrl(ep.label, ep.url, token))   // โหมด endpoint เต็ม
+    ? mode.endpoints.map((ep) => fireUrl(ep.label, ep.url, token, { method: ep.method, body: ep.body }))
     : mode.columns.map((col) => fireApi(mode.type, col, token));     // โหมด column ปกติ
   return Promise.all(tasks);
 }

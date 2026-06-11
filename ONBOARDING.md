@@ -52,7 +52,7 @@ npm start
 
 ## 3.5 โหมดที่มีตอนนี้ + วิธีเพิ่มโหมด
 
-**ตอนนี้มีโหมด 1-7 แล้ว** (โหมดถัดไป = 8):
+**ตอนนี้มีโหมด 1-8 แล้ว** (โหมดถัดไป = 9):
 
 | โหมด | ชื่อ | type | columns / endpoints |
 |---|---|---|---|
@@ -63,6 +63,9 @@ npm start
 | 5 | หน้า home | stock | latest, popular |
 | 6 | หน้าหุ้น dr รายตัว | stock | 4 endpoints เต็ม |
 | 7 | หน้าหลักหุ้น dr | stock | 3 endpoints เต็ม |
+| 8 | หน้า search result | stock | 1 endpoint POST + JSON body |
+
+> endpoint รองรับ POST ผ่าน field `method: 'POST'` + `body: {...}` (ดูโหมด 8) — `fireUrl` ใส่ Content-Type + stringify ให้
 
 > หมายเหตุ: endpoint host `sit-api-efincontent` ใช้ token จาก dc3hw ไม่ได้ (401 คนละ env) — สลับเป็น `dc3-api-efincontent` แทน (โหมด 6, 7)
 
