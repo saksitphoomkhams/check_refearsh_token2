@@ -52,7 +52,7 @@ npm start
 
 ## 3.5 โหมดที่มีตอนนี้ + วิธีเพิ่มโหมด
 
-**ตอนนี้มีโหมด 1-6 แล้ว** (โหมดถัดไป = 7):
+**ตอนนี้มีโหมด 1-7 แล้ว** (โหมดถัดไป = 8):
 
 | โหมด | ชื่อ | type | columns / endpoints |
 |---|---|---|---|
@@ -62,6 +62,9 @@ npm start
 | 4 | หน้าหลักหุ้น | stock | 29 columns |
 | 5 | หน้า home | stock | latest, popular |
 | 6 | หน้าหุ้น dr รายตัว | stock | 4 endpoints เต็ม |
+| 7 | หน้าหุ้น dr รายตัว (asset/news) | stock | 3 endpoints เต็ม |
+
+> หมายเหตุ: endpoint host `sit-api-efincontent` ใช้ token จาก dc3hw ไม่ได้ (401 คนละ env) — สลับเป็น `dc3-api-efincontent` แทน (โหมด 6, 7)
 
 > โหมด 6 ใช้ `endpoints: [{label, url}]` (ยิง API หลาย path/หลายแบบ) แทน `columns` — รองรับใน `fireMode`
 

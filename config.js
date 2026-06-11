@@ -45,9 +45,10 @@ const EXPIRY_BUFFER_SECONDS = 5;
 // --- นิยามแต่ละโหมด ---
 // page = หน้าที่เปิดเพื่อเก็บ SSIDI, type = ใช้เลือก path ของ API, columns = ยิงทุก column พร้อมกัน
 //
-// >>> ตอนนี้มีโหมด 1-6 แล้ว (โหมดถัดไปคือ 7) <<<
+// >>> ตอนนี้มีโหมด 1-7 แล้ว (โหมดถัดไปคือ 8) <<<
 //   1 = หน้าอ่านข่าว stock | 2 = หน้าอ่านข่าว crypto | 3 = หน้าหลักคริปโต
-//   4 = หน้าหลักหุ้น | 5 = หน้า home | 6 = หน้าหุ้น dr รายตัว (ใช้ endpoints เต็ม)
+//   4 = หน้าหลักหุ้น | 5 = หน้า home
+//   6, 7 = หน้าหุ้น dr รายตัว (ใช้ endpoints เต็ม)
 //
 // หมายเหตุ: โหมดปกติใช้ `columns` (URL pattern), แต่โหมดที่ต้องยิงหลาย API คนละ path
 // ให้ใช้ `endpoints: [{label, url}]` แทน (ดูโหมด 6 เป็นตัวอย่าง)
@@ -126,6 +127,27 @@ const MODES = {
         // เส้น stock/latest แต่ column = dr, limit = 1 (ตามที่ระบุ)
         label: 'stock/latest/dr',
         url: 'https://dc3-api-efincontent.efin.finance/api/v1/stock/latest/dr?limit=1&lang=th',
+      },
+    ],
+  },
+  // โหมด 7 ก็ใช้ endpoints เต็ม — เส้น otherasset/highlight + highlight เดิมอยู่ sit-api
+  7: {
+    name: 'หน้าหุ้น dr รายตัว (asset/news)',
+    type: 'stock',
+    page: 'https://dc3hw.efin.finance/th/asset/news/dr?page=1&sort_by=latest',
+    endpoints: [
+      {
+        label: 'stock/latest/dr',
+        url: 'https://dc3-api-efincontent.efin.finance/api/v1/stock/latest/dr?limit=5&lang=th',
+      },
+      {
+        // host เปลี่ยนจาก sit-api → dc3-api (token dc3hw ใช้กับ sit ไม่ได้ → 401)
+        label: 'otherasset/highlight',
+        url: 'https://dc3-api-efincontent.efin.finance/api/v1/otherasset/highlight?lang=th',
+      },
+      {
+        label: 'highlight',
+        url: 'https://dc3-api-efincontent.efin.finance/api/v1/highlight?lang=th',
       },
     ],
   },
