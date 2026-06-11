@@ -53,7 +53,8 @@ async function chooseMode() {
   console.log('==============================================');
   console.log('เลือกโหมดที่ต้องการทดสอบ:');
   for (const [k, m] of Object.entries(MODES)) {
-    console.log(`  ${k}. ${m.name}  [${m.type}, ${m.columns.length} columns]`);
+    const n = m.columns ? m.columns.length : m.endpoints.length;
+    console.log(`  ${k}. ${m.name}  [${m.type}, ${n} เส้น]`);
   }
   console.log('----------------------------------------------');
 

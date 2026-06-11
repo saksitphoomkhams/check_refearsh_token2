@@ -44,15 +44,18 @@ npm start                            # รัน (โหลด .env อัตโ
 
 ## โหมดที่มีตอนนี้ + วิธีเพิ่มโหมด
 
-**ตอนนี้มีโหมด 1-5 แล้ว** (โหมดถัดไป = 6):
+**ตอนนี้มีโหมด 1-6 แล้ว** (โหมดถัดไป = 7):
 
-| โหมด | ชื่อ | type | columns |
+| โหมด | ชื่อ | type | columns / endpoints |
 |---|---|---|---|
 | 1 | หน้าอ่านข่าว stock | stock | latest, popular |
 | 2 | หน้าอ่านข่าว crypto | crypto | latest, popular |
 | 3 | หน้าหลักคริปโต | crypto | 21 columns |
 | 4 | หน้าหลักหุ้น | stock | 29 columns |
 | 5 | หน้า home | stock | latest, popular |
+| 6 | หน้าหุ้น dr รายตัว | stock | 4 endpoints เต็ม (dashboard/dr/stock) |
+
+> โหมดปกติใช้ `columns` (URL pattern เดียว). โหมดที่ยิงหลาย API คนละ path ให้ใช้ `endpoints: [{label, url}]` (ดูโหมด 6)
 
 **วิธีเพิ่มโหมดใหม่ (ง่ายๆ 3 ขั้น)** — แก้ที่ `MODES` ใน `config.js`:
 

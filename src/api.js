@@ -38,16 +38,15 @@ function classify(httpStatus, statusMessage, hasData) {
 }
 
 /**
- * fireApi — ยิง API หนึ่งเส้น (หนึ่ง column) ด้วย token ที่กำหนด
- * @param {string} type   - 'stock' | 'crypto'
- * @param {string} column - ชื่อ column
- * @param {string} token  - ค่า SSIDI ที่ใส่เป็น Bearer
- * @returns {Promise<object>} ผลลัพธ์ที่ classify แล้ว พร้อมข้อมูลดิบบางส่วนไว้ debug
+ * fireUrl — ยิง URL เต็ม 1 เส้นด้วย token แล้ว classify ผล (ใช้ได้กับทุก endpoint)
+ * @param {string} label - ชื่อแสดงผลในตาราง (เช่น column หรือชื่อ endpoint)
+ * @param {string} url   - URL เต็มที่จะยิง
+ * @param {string} token - ค่า SSIDI ที่ใส่เป็น Bearer
+ * @returns {Promise<object>} ผลลัพธ์ที่ classify แล้ว
  */
-async function fireApi(type, column, token) {
-  const url = buildUrl(type, column);
+async function fireUrl(label, url, token) {
   const result = {
-    column,
+    column: label,
     url,
     httpStatus: 0,
     statusMessage: '',
@@ -101,15 +100,29 @@ async function fireApi(type, column, token) {
 }
 
 /**
- * fireMode — ยิงทุก column ของโหมดพร้อมกัน (parallel) ด้วย token เดียว
- * @param {object} mode  - object โหมดจาก config (มี type, columns)
+ * fireApi — ยิง API ตาม type+column (URL pattern มาตรฐาน)
+ * @param {string} type   - 'stock' | 'crypto'
+ * @param {string} column - ชื่อ column
+ * @param {string} token  - ค่า SSIDI
+ */
+function fireApi(type, column, token) {
+  return fireUrl(column, buildUrl(type, column), token);
+}
+
+/**
+ * fireMode — ยิงทุกเส้นของโหมดพร้อมกัน (parallel) ด้วย token เดียว
+ * รองรับ 2 แบบ:
+ *   - mode.endpoints : list ของ {label, url} เต็มๆ (สำหรับโหมดที่ใช้หลาย API/หลาย host)
+ *   - mode.columns   : list ชื่อ column (ใช้ URL pattern มาตรฐานตาม type)
+ * @param {object} mode  - object โหมดจาก config
  * @param {string} token - ค่า SSIDI
- * @returns {Promise<object[]>} array ผลลัพธ์ของแต่ละ column
+ * @returns {Promise<object[]>} array ผลลัพธ์ของแต่ละเส้น
  */
 async function fireMode(mode, token) {
-  // ยิงพร้อมกันทุกเส้นตาม spec ("ยิงพร้อมกันตามจำนวน column")
-  const tasks = mode.columns.map((col) => fireApi(mode.type, col, token));
+  const tasks = mode.endpoints
+    ? mode.endpoints.map((ep) => fireUrl(ep.label, ep.url, token))   // โหมด endpoint เต็ม
+    : mode.columns.map((col) => fireApi(mode.type, col, token));     // โหมด column ปกติ
   return Promise.all(tasks);
 }
 
-module.exports = { buildUrl, fireApi, fireMode, classify };
+module.exports = { buildUrl, fireUrl, fireApi, fireMode, classify };

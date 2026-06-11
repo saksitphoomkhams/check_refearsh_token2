@@ -45,9 +45,12 @@ const EXPIRY_BUFFER_SECONDS = 5;
 // --- นิยามแต่ละโหมด ---
 // page = หน้าที่เปิดเพื่อเก็บ SSIDI, type = ใช้เลือก path ของ API, columns = ยิงทุก column พร้อมกัน
 //
-// >>> ตอนนี้มีโหมด 1-5 แล้ว (โหมดถัดไปคือ 6) <<<
+// >>> ตอนนี้มีโหมด 1-6 แล้ว (โหมดถัดไปคือ 7) <<<
 //   1 = หน้าอ่านข่าว stock | 2 = หน้าอ่านข่าว crypto | 3 = หน้าหลักคริปโต
-//   4 = หน้าหลักหุ้น | 5 = หน้า home
+//   4 = หน้าหลักหุ้น | 5 = หน้า home | 6 = หน้าหุ้น dr รายตัว (ใช้ endpoints เต็ม)
+//
+// หมายเหตุ: โหมดปกติใช้ `columns` (URL pattern), แต่โหมดที่ต้องยิงหลาย API คนละ path
+// ให้ใช้ `endpoints: [{label, url}]` แทน (ดูโหมด 6 เป็นตัวอย่าง)
 //
 // --- วิธีเพิ่มโหมดใหม่ (ง่ายๆ 3 ขั้น) ---
 //   1) ก็อป block โหมดเดิมมา 1 อัน เปลี่ยนเลขนำหน้าเป็นเลขถัดไป (เช่น 5:)
@@ -99,6 +102,32 @@ const MODES = {
     type: 'stock',
     page: 'https://dc3hw.efin.finance/th',
     columns: ['latest', 'popular'],
+  },
+  // โหมด 6 ไม่ใช้ column pattern — ใช้ endpoint เต็มหลายเส้น (มีข้าม host ไป sit-api ด้วย)
+  // ทุกเส้นยิงด้วย SSIDI ที่เก็บมา (เปลี่ยนเฉพาะ Authorization)
+  6: {
+    name: 'หน้าหุ้น dr รายตัว',
+    type: 'stock',
+    page: 'https://dc3hw.efin.finance/th/symbol/set/aapl03/news-article',
+    endpoints: [
+      {
+        label: 'dashboard/content/favorites',
+        url: 'https://dc3-api-efincontent.efin.finance/api/v1/dashboard/content/favorites?PageNumber=1&PageSize=5&lang=th',
+      },
+      {
+        label: 'dashboard/video/favorites',
+        url: 'https://dc3-api-efincontent.efin.finance/api/v1/dashboard/video/favorites?PageNumber=1&PageSize=5&lang=th',
+      },
+      {
+        label: 'dr/AAPL03/news',
+        url: 'https://dc3-api-efincontent.efin.finance/api/v1/dr/AAPL03/news/dr?page=1&size=10&period=10Y&lang=th',
+      },
+      {
+        // เส้น stock/latest แต่ column = dr, limit = 1 (ตามที่ระบุ)
+        label: 'stock/latest/dr',
+        url: 'https://dc3-api-efincontent.efin.finance/api/v1/stock/latest/dr?limit=1&lang=th',
+      },
+    ],
   },
 };
 

@@ -132,7 +132,7 @@ function buildReport(data) {
     <div class="kv">
       <b>โหมดที่ทดสอบ</b><span>${esc(mode.name)} (type: ${esc(mode.type)})</span>
       <b>หน้าที่ใช้ตรวจ</b><span><a href="${esc(mode.page)}">${esc(mode.page)}</a></span>
-      <b>จำนวน column</b><span>${mode.columns.length} เส้น</span>
+      <b>จำนวนเส้น API</b><span>${(mode.columns || mode.endpoints).length} เส้น</span>
     </div>
   </div>
 

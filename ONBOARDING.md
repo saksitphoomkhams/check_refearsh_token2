@@ -52,15 +52,18 @@ npm start
 
 ## 3.5 โหมดที่มีตอนนี้ + วิธีเพิ่มโหมด
 
-**ตอนนี้มีโหมด 1-5 แล้ว** (โหมดถัดไป = 6):
+**ตอนนี้มีโหมด 1-6 แล้ว** (โหมดถัดไป = 7):
 
-| โหมด | ชื่อ | type | columns |
+| โหมด | ชื่อ | type | columns / endpoints |
 |---|---|---|---|
 | 1 | หน้าอ่านข่าว stock | stock | latest, popular |
 | 2 | หน้าอ่านข่าว crypto | crypto | latest, popular |
 | 3 | หน้าหลักคริปโต | crypto | 21 columns |
 | 4 | หน้าหลักหุ้น | stock | 29 columns |
 | 5 | หน้า home | stock | latest, popular |
+| 6 | หน้าหุ้น dr รายตัว | stock | 4 endpoints เต็ม |
+
+> โหมด 6 ใช้ `endpoints: [{label, url}]` (ยิง API หลาย path/หลายแบบ) แทน `columns` — รองรับใน `fireMode`
 
 **วิธีเพิ่มโหมดใหม่ (ง่ายๆ):** แก้ที่ `MODES` ใน `config.js`
 1. ก็อป block โหมดเดิม 1 อัน เปลี่ยนเลขนำหน้าเป็นเลขถัดไป (เช่น `5:`)
