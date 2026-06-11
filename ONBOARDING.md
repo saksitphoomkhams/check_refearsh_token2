@@ -50,6 +50,26 @@ npm start
 
 ---
 
+## 3.5 โหมดที่มีตอนนี้ + วิธีเพิ่มโหมด
+
+**ตอนนี้มีโหมด 1-4 แล้ว** (โหมดถัดไป = 5):
+
+| โหมด | ชื่อ | type | columns |
+|---|---|---|---|
+| 1 | หน้าอ่านข่าว stock | stock | latest, popular |
+| 2 | หน้าอ่านข่าว crypto | crypto | latest, popular |
+| 3 | หน้าหลักคริปโต | crypto | 21 columns |
+| 4 | หน้าหลักหุ้น | stock | 29 columns |
+
+**วิธีเพิ่มโหมดใหม่ (ง่ายๆ):** แก้ที่ `MODES` ใน `config.js`
+1. ก็อป block โหมดเดิม 1 อัน เปลี่ยนเลขนำหน้าเป็นเลขถัดไป (เช่น `5:`)
+2. แก้ 4 ค่า: `name` (ชื่อ), `type` (`stock`/`crypto`), `page` (URL เก็บ SSIDI), `columns` (list)
+3. save → `npm start` → เมนูมีโหมดใหม่อัตโนมัติ
+
+> ถ้าให้ Claude ทำให้: มันจะเด้ง popup ถามข้อมูล 4 ค่านี้ก่อน แล้วเพิ่มให้เอง (ดู playbook ใน `CLAUDE.md`)
+
+API เส้นจริง = `${API_BASE}/${type}/latest/${column}?limit=5&lang=th`
+
 ## 4. โครงสร้างไฟล์
 
 | ไฟล์ | หน้าที่ |

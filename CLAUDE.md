@@ -50,6 +50,37 @@ npm start                            # รัน (โหลด .env อัตโ
 - โหมด 4 spec เขียนหน้าเป็น `/th/crypto` (พิมพ์ผิด) — โค้ดใช้ `/th/stock`
 - selector ของ efin/jwt.io อาจเปลี่ยนเมื่อเว็บ update — ถ้า login/decode พัง เช็ก selector ใน `browser.js` / `jwtio.js` ก่อน
 
+## ⭐ เพิ่มโหมดใหม่ (playbook บังคับ)
+
+**เมื่อ user ขอเพิ่มโหมด (หรือเอ่ยถึงการเพิ่มหน้า/โหมดตรวจใหม่) ให้ทำตามนี้เสมอ:**
+
+ขั้น 1 — **เด้ง popup ถามข้อมูลก่อน** ด้วยเครื่องมือ `AskUserQuestion` เก็บ field ให้ครบ:
+
+| field | คำอธิบาย | ตัวอย่าง |
+|---|---|---|
+| `key` | หมายเลขโหมด (ถัดจากล่าสุด) | `5` |
+| `name` | ชื่อโหมด | `หน้าอ่านข่าว gold` |
+| `type` | **stock** หรือ **crypto** (กำหนด path ของ API) | `stock` |
+| `page` | URL หน้าที่ใช้ตรวจ (เก็บ SSIDI) | `https://dc3hw.efin.finance/th/...` |
+| `columns` | รายชื่อ column (คั่นด้วย comma) ยิงทุกตัวพร้อมกัน | `latest, popular` |
+
+- `type` ให้ทำเป็นตัวเลือก (stock/crypto) ใน popup
+- `name` / `page` / `columns` เป็น free-text — รับผ่านช่อง "Other"/notes หรือถามเพิ่มถ้ายังไม่ครบ
+- ถ้าข้อมูลไม่ครบ ห้ามเดา — ถามจนครบ
+
+ขั้น 2 — **เพิ่ม entry ลง `MODES` ใน `config.js`** ตาม schema เดิม:
+```js
+5: {
+  name: '<name>',
+  type: '<stock|crypto>',
+  page: '<page url>',
+  columns: ['<col1>', '<col2>', ...],   // trim ช่องว่างออก
+},
+```
+
+ขั้น 3 — **verify**: API เส้นจริง = `${API_BASE}/${type}/latest/${column}?limit=5&lang=th`
+ถ้าทำได้ ลองยิง 1 column ด้วย token สดเพื่อเช็กว่า column ใช้ได้จริง (คาด DATA 200)
+
 ## ภาษา
 
 ตอบ/คอมเมนต์เป็นไทยกระชับ เก็บ technical term เป็น English. โค้ดคอมเมนต์ทุกฟังก์ชัน

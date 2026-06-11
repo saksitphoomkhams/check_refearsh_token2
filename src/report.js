@@ -92,7 +92,7 @@ function buildReport(data) {
         <td><code>${esc(col)}</code></td>
         <td>${b ? esc(b.classification) + ` (HTTP ${b.httpStatus})` : '-'}</td>
         <td>${beforeOk ? badge('ผ่าน', 'pass') : badge('ไม่ผ่าน', 'fail')}</td>
-        <td><code>${b ? fmtTime(b.firedAt) : '-'}</code></td>
+        <td><code>${esc(exp1Str)}</code></td>
         <td>${a ? esc(a.classification) + ` (HTTP ${a.httpStatus})` : '-'}</td>
         <td>${afterOk ? badge('ผ่าน', 'pass') : badge('ไม่ผ่าน', 'fail')}</td>
         <td>${rowPass ? badge('PASS', 'pass') : badge('FAIL', 'fail')}</td>
@@ -165,10 +165,10 @@ function buildReport(data) {
         <tr>
           <th>Column</th>
           <th>ก่อนหมดอายุ (ผล)</th>
-          <th>ก่อน: คาด DATA</th>
-          <th>⏱ เวลายิงครั้งแรก</th>
+          <th>ก่อนหมดอายุ: ต้องได้ข้อมูล</th>
+          <th>⏱ เวลาที่ Token แรกหมดอายุ</th>
           <th>หลังหมดอายุ (ผล)</th>
-          <th>หลัง: คาด TOKEN_INVALID</th>
+          <th>หลังหมดอายุ: ต้องถูกปฏิเสธ</th>
           <th>สรุปเส้นนี้</th>
           <th>⏱ เวลายิงหลังหมดอายุ</th>
         </tr>
