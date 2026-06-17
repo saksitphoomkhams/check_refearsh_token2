@@ -17,10 +17,10 @@ npm start                            # รัน (โหลด .env อัตโ
 
 ## ข้อเท็จจริงสำคัญ (verify กับ site จริงแล้ว — อย่าเดาใหม่)
 
-- **token ที่ API รับ** = cookie ชื่อ `SSIDI` บน domain **`dc3hw.efin.finance`** (อายุ ~15 นาที)
-  - มี `SSIDI` บน `www.efin.finance` ด้วย (อายุ 24h) แต่ยิง API → **401** อย่าใช้
-  - `SSIDII` (double-I) = refresh token (24h) ไม่ใช่ตัวยิง API
-  - `extractSSIDI` เลือกตาม domain ของหน้าโหมด + ชื่อ exact "SSIDI"
+- **environment = production**: login `www.efin.finance`, API `api-efincontent.efin.finance` (+ `api-efinmarketinfo`)
+  - **token ที่ API รับ** = cookie `SSIDI` บน domain **`www.efin.finance`** (อายุ ~15 นาที บน production)
+  - `extractSSIDI` เลือก cookie ตาม domain ของหน้าโหมด + ชื่อ exact "SSIDI" (ไม่ใช่ SSIDII)
+  - (ของเดิมเคยใช้ env dc3: dc3hw + dc3-api-efincontent — เปลี่ยนมา production แล้ว)
 - **login เป็น 2 ขั้น**: `#emailOrPhone` → ปุ่ม "ต่อไป" (`#login_next_btn`) → `#password` → ปุ่ม "ยืนยัน" (`#login_submit_btn`)
   - ปุ่ม disabled จนกว่าจะ **พิมพ์จริง** → ต้องใช้ `pressSequentially` (ไม่ใช่ `fill`) ดู `typeUntilEnabled`
 - **exp/iat อ่านผ่าน jwt.io จริง** (ตาม spec) ไม่ decode เอง — ดู `src/jwtio.js`

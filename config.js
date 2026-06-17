@@ -23,11 +23,11 @@ if (!CREDENTIALS.email || !CREDENTIALS.password) {
 }
 
 // --- URL หลัก ---
-const LOGIN_URL = 'https://dc3hw.efin.finance/th/login';
+const LOGIN_URL = 'https://www.efin.finance/th/login';
 
 // API base — เส้นจริงคือ `${API_BASE}/${type}/latest/${column}?limit=5&lang=th`
 // type = 'stock' หรือ 'crypto'
-const API_BASE = 'https://dc3-api-efincontent.efin.finance/api/v1';
+const API_BASE = 'https://api-efincontent.efin.finance/api/v1';
 
 // ชื่อ key ของ token ที่ต้องเก็บจาก Application tab (cookie / localStorage / sessionStorage)
 // ระบบจะค้นหา key ที่ match regex นี้แบบไม่สนตัวพิมพ์
@@ -67,19 +67,19 @@ const MODES = {
   1: {
     name: 'หน้าอ่านข่าว stock',
     type: 'stock',
-    page: 'https://dc3hw.efin.finance/th/stock/news/detail/0xx0AA',
+    page: 'https://www.efin.finance/th/crypto/news/bitcoin',
     columns: ['latest', 'popular'],
   },
   2: {
     name: 'หน้าอ่านข่าว crypto',
     type: 'crypto',
-    page: 'https://dc3hw.efin.finance/th/crypto/news/detail/bitcoin-institutional-coinbase-bernstein',
+    page: 'https://www.efin.finance/th/crypto/news/detail/bitcoin-thailand-conference-2026-right-shift',
     columns: ['latest', 'popular'],
   },
   3: {
     name: 'หน้าหลักคริปโต',
     type: 'crypto',
-    page: 'https://dc3hw.efin.finance/th/crypto',
+    page: 'https://www.efin.finance/th/crypto',
     columns: [
       'latest', 'popular', 'bitcoin', 'altcoins', 'etf', 'regulation', 'watch',
       'institution', 'rwa', 'blockchain', 'business', 'defi', 'nft', 'press-room',
@@ -90,7 +90,7 @@ const MODES = {
     name: 'หน้าหลักหุ้น',
     // หมายเหตุ: spec ระบุหน้าเป็น .../th/crypto (น่าจะพิมพ์ผิด) — ใช้หน้าหุ้นแทนเพราะเป็นโหมดหุ้น
     type: 'stock',
-    page: 'https://dc3hw.efin.finance/th/stock',
+    page: 'https://www.efin.finance/th/stock',
     columns: [
       'latest', 'popular', 'highlight', 'market', 'economics', 'politics', 'ai-tech',
       'company-news', 'earnings', 'press', 'infographics', 'opinion', 'editorial', 'scoops',
@@ -102,7 +102,7 @@ const MODES = {
   5: {
     name: 'หน้า home',
     type: 'stock',
-    page: 'https://dc3hw.efin.finance/th',
+    page: 'https://www.efin.finance/th',
     columns: ['latest', 'popular'],
   },
   // โหมด 6 ไม่ใช้ column pattern — ใช้ endpoint เต็มหลายเส้น (มีข้าม host ไป sit-api ด้วย)
@@ -110,24 +110,24 @@ const MODES = {
   6: {
     name: 'หน้าหุ้น dr รายตัว',
     type: 'stock',
-    page: 'https://dc3hw.efin.finance/th/symbol/set/aapl03/news-article',
+    page: 'https://www.efin.finance/th/symbol/set/aapl01/overview/price',
     endpoints: [
       {
         label: 'dashboard/content/favorites',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/dashboard/content/favorites?PageNumber=1&PageSize=5&lang=th',
+        url: 'https://api-efincontent.efin.finance/api/v1/dashboard/content/favorites?PageNumber=1&PageSize=5&lang=th',
       },
       {
         label: 'dashboard/video/favorites',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/dashboard/video/favorites?PageNumber=1&PageSize=5&lang=th',
+        url: 'https://api-efincontent.efin.finance/api/v1/dashboard/video/favorites?PageNumber=1&PageSize=5&lang=th',
       },
       {
         label: 'dr/AAPL03/news',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/dr/AAPL03/news/dr?page=1&size=10&period=10Y&lang=th',
+        url: 'https://api-efincontent.efin.finance/api/v1/dr/AAPL03/news/dr?page=1&size=10&period=10Y&lang=th',
       },
       {
         // เส้น stock/latest แต่ column = dr, limit = 1 (ตามที่ระบุ)
         label: 'stock/latest/dr',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/stock/latest/dr?limit=1&lang=th',
+        url: 'https://api-efincontent.efin.finance/api/v1/stock/latest/dr?limit=1&lang=th',
       },
     ],
   },
@@ -135,20 +135,20 @@ const MODES = {
   7: {
     name: 'หน้าหลักหุ้น dr',
     type: 'stock',
-    page: 'https://dc3hw.efin.finance/th/asset',
+    page: 'https://www.efin.finance/th/asset',
     endpoints: [
       {
         label: 'stock/latest/dr',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/stock/latest/dr?limit=5&lang=th',
+        url: 'https://api-efincontent.efin.finance/api/v1/stock/latest/dr?limit=5&lang=th',
       },
       {
         // host เปลี่ยนจาก sit-api → dc3-api (token dc3hw ใช้กับ sit ไม่ได้ → 401)
         label: 'otherasset/highlight',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/otherasset/highlight?lang=th',
+        url: 'https://api-efincontent.efin.finance/api/v1/otherasset/highlight?lang=th',
       },
       {
         label: 'highlight',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/highlight?lang=th',
+        url: 'https://api-efincontent.efin.finance/api/v1/highlight?lang=th',
       },
     ],
   },
@@ -156,11 +156,11 @@ const MODES = {
   8: {
     name: 'หน้า search result',
     type: 'stock',
-    page: 'https://dc3hw.efin.finance/th/search/latest?keyword=tun',
+    page: 'https://www.efin.finance/th/search/latest?keyword=%E0%B8%AD%E0%B8%AD%E0%B8%A1',
     endpoints: [
       {
         label: 'search (POST)',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/search',
+        url: 'https://api-efincontent.efin.finance/api/v1/search',
         method: 'POST',
         body: {
           keyword: 'test',
@@ -181,23 +181,23 @@ const MODES = {
   9: {
     name: 'หน้า search modal',
     type: 'stock',
-    page: 'https://dc3hw.efin.finance/th',
+    page: 'https://www.efin.finance/th',
     endpoints: [
       {
         label: 'recommend_search_stocks',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/search/recommend_search_stocks?limit=0',
+        url: 'https://api-efincontent.efin.finance/api/v1/search/recommend_search_stocks?limit=0',
       },
       {
         label: 'GetMasterSymbolList',
-        url: 'https://dc3-api-efinmarketinfo.efin.finance/GetMasterSymbolList?lang=th',
+        url: 'https://api-efinmarketinfo.efin.finance/GetMasterSymbolList?lang=th',
       },
       {
         label: 'search/autocomplete',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/search/autocomplete?lang=th&limit=3',
+        url: 'https://api-efincontent.efin.finance/api/v1/search/autocomplete?lang=th&limit=3',
       },
       {
         label: 'search/youtube',
-        url: 'https://dc3-api-efincontent.efin.finance/api/v1/search/youtube?limit=3',
+        url: 'https://api-efincontent.efin.finance/api/v1/search/youtube?limit=3',
       },
     ],
   },
